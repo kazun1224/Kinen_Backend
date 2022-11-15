@@ -9,3 +9,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email String @unique
+  hashedPassword String
+  nickName String?
+  cigarettes Cigarette[]
+  total Total[]
+}
+
+model Cigarette {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String
+  tar String
+  num String
+  amount Int
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Total {
+  id Int @id @default(autoincrement())
+  totalAmount Int
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Text {
+  id Int @id @default(autoincrement())
+  text String
+  amount Int
+}
