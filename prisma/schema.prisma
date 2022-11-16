@@ -27,7 +27,7 @@ model Cigarette {
   updatedAt DateTime @updatedAt
   name String
   tar String
-  num String
+  num Int
   amount Int
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
