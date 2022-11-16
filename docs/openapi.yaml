@@ -1,0 +1,110 @@
+openapi: '3.0.3'
+
+info:
+  title: Kinen API
+  version: 1.0.0
+
+servers:
+- url: "http://localhost:3000"
+  description: "Local machine"
+
+paths:
+  /auth:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    example: example@example.com
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                created_at:
+                  type: string
+                  example: 2017-07-21
+                updated_at:
+                  type: string
+                  example: 2017-07-21
+                email:
+                  type: string
+                  example: example@example.com
+                hashedpasword:
+                  type: string
+                  example: xxxxxxxxx
+
+
+      responses:
+        201:
+          description: Created
+
+components:
+  schemas:
+    cigarette:
+      type: object
+      description: タバコのデータ
+      properties:
+        id:
+          type: integer
+          example: 1
+        created_at:
+          type: string
+          example: 2017-07-21
+        updated_at:
+          type: string
+          example: 2017-07-21
+        name:
+          type: string
+          example: マルポロ
+        tar:
+          type: integer
+          example: 12
+        num:
+          type: integer
+          example: 20
+        amount:
+          type: integer
+          example: 500
+        user_id:
+          type: integer
+          example: 1
+        user:
+          type: array
+    total:
+      type: object
+      description: 金額のデータ
+      properties:
+        id:
+          type: integer
+          example: 1
+        total_amount:
+          type: integer
+          example: 1200
+        user_id:
+          type: integer
+          example: 1
+    text:
+      type: object
+      description: テキストのデータ
+      properties:
+        id:
+          type: integer
+          example: 1
+        text:
+          type: string
+          example: 車が買えます
+        amount:
+          type: integer
+          example: 1000000
