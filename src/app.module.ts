@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
+import { CigaretteModule } from './cigarette/cigarette.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UserModule } from './user/user.module';
     PrismaModule,
     UserModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    CigaretteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
