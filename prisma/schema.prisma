@@ -26,8 +26,8 @@ model Cigarette {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name String
-  tar String
-  num Int
+  tar Int?
+  numberOfCigarette Int
   amount Int
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
