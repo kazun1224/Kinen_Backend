@@ -108,3 +108,7 @@ components:
         amount:
           type: integer
           example: 1000000
+
+# サンプルサイト
+# https://www.insight-tec.com/tech-blog/api/20210409_crud/
+# https://garafu.blogspot.com/2020/05/how-to-use-oas.html
