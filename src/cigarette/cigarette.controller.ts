@@ -42,12 +42,12 @@ export class CigaretteController {
   }
 
   @Patch(':id')
-  updateCgaretteById(
+  updateCigaretteById(
     @Req() req: Request,
     @Param('id', ParseIntPipe) cigaretteId: number,
     @Body() dto: UpdateCigaretteDto,
   ) {
-    return this.cigaretteService.updateCgaretteById(
+    return this.cigaretteService.updateCigaretteById(
       req.user.id,
       cigaretteId,
       dto,
