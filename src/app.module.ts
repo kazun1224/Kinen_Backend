@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { CigaretteModule } from './cigarette/cigarette.module';
+import { TotalModule } from './total/total.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CigaretteModule } from './cigarette/cigarette.module';
     UserModule,
     ConfigModule.forRoot({ isGlobal: true }),
     CigaretteModule,
+    TotalModule,
   ],
   controllers: [AppController],
   providers: [AppService],
