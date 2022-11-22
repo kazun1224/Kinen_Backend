@@ -1,19 +1,19 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UpdateCigaretteDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsInt()
+  @IsString()
   @IsOptional()
-  tar: number;
+  tar: string;
 
-  @IsInt()
+  @IsString()
   @IsNotEmpty()
-  numberOfCigarette: number;
+  numberOfCigarette: string;
 
-  @IsInt()
+  @IsString()
   @IsNotEmpty()
-  amount: number;
+  amount: string;
 }
