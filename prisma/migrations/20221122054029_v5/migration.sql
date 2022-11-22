@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "Cigarette" ALTER COLUMN "amount" SET DATA TYPE TEXT,
+ALTER COLUMN "numberOfCigarette" SET DATA TYPE TEXT,
+ALTER COLUMN "tar" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Text" ALTER COLUMN "amount" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Total" ALTER COLUMN "totalAmount" SET DATA TYPE TEXT;
