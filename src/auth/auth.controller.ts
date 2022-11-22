@@ -17,7 +17,7 @@ import { Csrf, Message } from './interface/auth.interface';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('csrf')
+  @Get('/csrf')
   getCsrfToken(@Req() req: Request): Csrf {
     return { csrfToken: req.csrfToken() };
   }
@@ -36,7 +36,7 @@ export class AuthController {
     const jwt = await this.authService.login(dto);
     res.cookie('access_token', jwt.accessToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'none',
       path: '/',
     });
@@ -46,14 +46,14 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('logout')
+  @Post('/logout')
   logout(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ): Message {
     res.cookie('access_token', '', {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'none',
       path: '/',
     });

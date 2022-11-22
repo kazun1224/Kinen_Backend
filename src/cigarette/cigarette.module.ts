@@ -6,6 +6,6 @@ import { CigaretteService } from './cigarette.service';
 @Module({
   imports: [PrismaModule],
   controllers: [CigaretteController],
-  providers: [CigaretteService]
+  providers: [CigaretteService],
 })
 export class CigaretteModule {}
