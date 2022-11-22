@@ -1,12 +1,15 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Cigarette } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { TotalService } from 'src/total/total.service';
 import { CreateCigaretteDto } from './dto/create-cigarette.dto';
 import { UpdateCigaretteDto } from './dto/update-cigarette';
 
 @Injectable()
 export class CigaretteService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+  ) {}
 
   getCigarettes(userId: number): Promise<Cigarette[]> {
     return this.prisma.cigarette.findMany({
@@ -18,6 +21,7 @@ export class CigaretteService {
       },
     });
   }
+
   async getCigaretteById(
     userId: number,
     cigaretteId: number,
@@ -40,11 +44,34 @@ export class CigaretteService {
         ...dto,
       },
     });
-    this.prisma.cigarette.findMany;
+
+    const cigarettes = await this.prisma.cigarette.findMany({
+      where: {
+        userId,
+      },
+      select: {
+        amount: true,
+      },
+    });
+    const amounts = cigarettes.map((cigarette) => cigarette.amount);
+
+    const totalAmount = amounts.reduce((total, amount) => {
+      return total + amount;
+    });
+
+    await this.prisma.total.create({
+      data: {
+        userId,
+        totalAmount,
+      }
+    })
+
+
+
     return cigarette;
   }
 
-  async updateCgaretteById(
+  async updateCigaretteById(
     userId: number,
     cigaretteId: number,
     dto: UpdateCigaretteDto,
