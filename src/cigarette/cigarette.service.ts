@@ -45,26 +45,26 @@ export class CigaretteService {
       },
     });
 
-    const cigarettes = await this.prisma.cigarette.findMany({
-      where: {
-        userId,
-      },
-      select: {
-        amount: true,
-      },
-    });
-    const amounts = cigarettes.map((cigarette) => cigarette.amount);
+    // const cigarettes = await this.prisma.cigarette.findMany({
+    //   where: {
+    //     userId,
+    //   },
+    //   select: {
+    //     amount: true,
+    //   },
+    // });
+    // const amounts = cigarettes.map((cigarette) => cigarette.amount);
 
-    const totalAmount = amounts.reduce((total, amount) => {
-      return total + amount;
-    });
+    // const totalAmount = amounts.reduce((total, amount) => {
+    //   return total + amount;
+    // });
 
-    await this.prisma.total.create({
-      data: {
-        userId,
-        totalAmount,
-      }
-    })
+    // await this.prisma.total.create({
+    //   data: {
+    //     userId,
+    //     totalAmount,
+    //   }
+    // })
 
 
 
