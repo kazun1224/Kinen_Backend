@@ -29,17 +29,17 @@ model Cigarette {
   tar               String?
   numberOfCigarette String
   amount            String
-  corton            Carton[]
+  carton            Carton?
   userId            Int
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Carton {
-  id          Int       @id @default(autoincrement())
-  boxes       String
-  amount      String
-  cigaretteId Int
-  cigarette   Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
+  id           Int       @id @default(autoincrement())
+  boxes        String
+  cartonAmount String
+  cigaretteId  Int @unique
+  cigarette    Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
 }
 
 model Total {
