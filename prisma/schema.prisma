@@ -18,7 +18,7 @@ model User {
   hashedPassword String
   nickName       String?
   cigarettes     Cigarette[]
-  total          Total[]
+  total          Total?
 }
 
 model Cigarette {
@@ -38,7 +38,7 @@ model Carton {
   id           Int       @id @default(autoincrement())
   boxes        String
   cartonAmount String
-  cigaretteId  Int @unique
+  cigaretteId  Int       @unique
   cigarette    Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
 }
 
@@ -47,7 +47,7 @@ model Total {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   totalAmount String
-  userId      Int
+  userId      Int      @unique
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
