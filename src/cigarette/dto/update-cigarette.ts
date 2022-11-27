@@ -16,4 +16,12 @@ export class UpdateCigaretteDto {
   @IsString()
   @IsNotEmpty()
   amount: string;
+
+  @IsString()
+  @IsNotEmpty()
+  boxes: string;
+
+  @IsString()
+  @IsNotEmpty()
+  cartonAmount: string;
 }
