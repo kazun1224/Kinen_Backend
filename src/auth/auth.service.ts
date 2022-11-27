@@ -12,7 +12,7 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   async signUp(dto: AuthDto) {
@@ -22,6 +22,11 @@ export class AuthService {
         data: {
           email: dto.email,
           hashedPassword: hashed,
+          total: {
+            create: {
+              totalAmount: '0',
+            },
+          },
         },
       });
       return {
@@ -39,37 +44,38 @@ export class AuthService {
 
   async login(dto: AuthDto) {
     const user = await this.prisma.user.findUnique({
-      where : {
-        email : dto.email,
-      }
-    })
+      where: {
+        email: dto.email,
+      },
+    });
 
-    if(!user) {
+    if (!user) {
       throw new ForbiddenException('メールかパスワードが間違っています');
-    };
-
-    const isValid = await bcrypt.compare(dto.password, user.hashedPassword)
-
-    if(!isValid) {
-      throw new ForbiddenException('メールアドレスかパスワードが間違っています')
     }
-    return this.generateJwt(user.id, user.email)
+
+    const isValid = await bcrypt.compare(dto.password, user.hashedPassword);
+
+    if (!isValid) {
+      throw new ForbiddenException(
+        'メールアドレスかパスワードが間違っています',
+      );
+    }
+    return this.generateJwt(user.id, user.email);
   }
 
   async generateJwt(userId: number, email: string): Promise<Jwt> {
-
     const payload = {
       sub: userId,
-      email
-    }
-    const secret = this.config.get('JWT_SECRET')
-    const token = await this.jwtService.signAsync(payload,{
+      email,
+    };
+    const secret = this.config.get('JWT_SECRET');
+    const token = await this.jwtService.signAsync(payload, {
       expiresIn: '5m',
       secret,
-    })
+    });
 
     return {
       accessToken: token,
-    }
+    };
   }
 }
