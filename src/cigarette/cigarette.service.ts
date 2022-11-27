@@ -28,6 +28,9 @@ export class CigaretteService {
         userId,
         id: cigaretteId,
       },
+      include: {
+        carton: true,
+      },
     });
   }
 
