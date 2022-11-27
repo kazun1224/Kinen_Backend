@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CigaretteService } from 'src/cigarette/cigarette.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TotalService {
-  constructor(
-    private readonly prisma: PrismaService,
-    // private readonly cigarette: CigaretteService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async getTotal(userId: number) {
     return await this.prisma.total.findFirst({
@@ -17,28 +13,56 @@ export class TotalService {
     });
   }
 
-  // async sumTotalAmount(userId: number) {
-  //   const cigarettes = await this.prisma.cigarette.findMany({
-  //     where: {
-  //       userId,
-  //     },
-  //     select: {
-  //       amount: true,
-  //     },
-  //   });
-  //   const amounts = cigarettes.map((cigarette) => cigarette.amount);
+  async totalCalcByOnePack(userId: number, cigaretteId: number) {
+    const cigarette = await this.prisma.cigarette.findFirst({
+      where: {
+        id: cigaretteId,
+      },
+    });
 
-  //   const totalAmount = amounts.reduce((total, amount) => {
-  //     return total + amount;
-  //   });
+    const prevAmount = await this.prisma.total.findFirst({
+      where: {
+        userId,
+      },
+    });
+    if (prevAmount) {
+    }
+    const newAmount = Number(prevAmount.totalAmount) + Number(cigarette.amount);
+    const amount = await this.prisma.total.update({
+      where: {
+        userId,
+      },
+      data: {
+        totalAmount: newAmount.toString(),
+      },
+    });
 
-  //   await this.prisma.total.create({
-  //     data: {
-  //       userId,
-  //       totalAmount,
-  //     }
-  //   })
+    return amount;
+  }
 
-  //   return totalAmount;
-  // }
+  async totalCalcByCarton(userId: number, cigaretteId: number) {
+    const carton = await this.prisma.carton.findFirst({
+      where: {
+        cigaretteId,
+      },
+    });
+
+    const prevAmount = await this.prisma.total.findFirst({
+      where: {
+        userId,
+      },
+    });
+    const newAmount =
+      Number(prevAmount.totalAmount) + Number(carton.cartonAmount);
+    const amount = await this.prisma.total.update({
+      where: {
+        userId,
+      },
+      data: {
+        totalAmount: newAmount.toString(),
+      },
+    });
+
+    return amount;
+  }
 }
